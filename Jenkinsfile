@@ -10,7 +10,14 @@ pipeline {
         
         stage('Install Dependencies') {
             steps {
-                bat 'composer install'
+                bat 'composer install --no-interaction --ignore-platform-req=ext-fileinfo'
+            }
+        }
+        
+        stage('Prepare Laravel') {
+            steps {
+                bat 'copy .env.example .env'
+                bat 'php artisan key:generate'
             }
         }
         
